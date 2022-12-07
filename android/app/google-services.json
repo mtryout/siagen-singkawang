@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "153994932727",
+    "project_id": "si-agen-fire",
+    "storage_bucket": "si-agen-fire.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153994932727:android:4cf3ddaccf4a093a74bef2",
+        "android_client_info": {
+          "package_name": "com.siagent.singkawang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153994932727-lqaq2s13ofseja039b6gm5id6p4bbpsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA11-ynCCpwTIBZ0_2wyoQ-QPX35tUWWY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153994932727-lqaq2s13ofseja039b6gm5id6p4bbpsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

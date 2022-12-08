@@ -14,9 +14,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    var authProvider = Provider.of<AuthProvider>(context);
     final size = MediaQuery.of(context).size;
+    
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -339,5 +344,18 @@ class SignInOneSocialButton extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> login() async {
+    var params = {
+      'email': _emailController.text,
+      'password': _passwordController.text,
+    };
+
+    if (_emailController.text == '' || _passwordController.text == '') {
+      MyHelper.toast('Inputan tidak boleh kosong');
+    } else {
+      await Provider.of<AuthProvider>(context, listen: false).login(params);
+    }
   }
 }

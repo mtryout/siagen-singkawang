@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: size.height * 0.09,
                 ),
                 //logo section
-                logo(size.height / 7, size.height / 7),
+                logo(size.height / 6, size.height / 6),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: const Text('Daftar',
                         style: TextStyle(
-                            color: Color(0xFF21899C), fontSize: 14.0)),
+                            color: Colors.black, fontSize: 14.0)),
                   ),
                 ]),
                 SizedBox(
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
           width: 1.0,
-          color: const Color(0xFF21899C),
+          color: Colors.black,
         ),
       ),
       child: TextField(
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
           width: 1.0,
-          color: const Color(0xFF21899C),
+          color: Colors.black,
         ),
       ),
       child: TextField(
@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: size.height / 14,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50.0),
-          color: const Color(0xFF21899C),
+          color: Colors.black,
           boxShadow: [
             BoxShadow(
               color: const Color(0xFF4C2E84).withOpacity(0.2),
@@ -316,7 +316,7 @@ class SignInOneSocialButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(40.0),
         border: Border.all(
           width: 1.0,
-          color: const Color(0xFF134140),
+          color: Colors.black,
         ),
       ),
       child: Row(

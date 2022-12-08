@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import '../service/navigation_service.dart';
+import '../services/navigation_service.dart';
 import '../widgets/custom_card.dart';
 import 'my_color.dart';
 import 'my_style.dart';

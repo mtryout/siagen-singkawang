@@ -18,59 +18,96 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 23.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //logo section
-                logo(size.height / 6, size.height / 6),
-                SizedBox(
-                  height: size.height * 0.04,
-                ),
-                headerText(),
-                SizedBox(
-                  height: size.height * 0.04,
-                ),
-                SignInOneSocialButton(
-                  iconPath: 'assets/google_logo.svg',
-                  text: 'Daftar Dengan Google',
-                  size: size,
-                ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
-                //sign up text here
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, children: [
-                  footerText(),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(
-                        color: Color(0xFF21899C),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
-                    child: const Text('Masuk',
-                        style: TextStyle(
-                            color: Color(0xFF21899C), fontSize: 14.0)),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 23.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: size.height * 0.05,
                   ),
-                ]),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
-                loginText(),
-              ],
+                  //logo section
+                  logo(size.height / 6, size.height / 6),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  headerText(),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  //email & password section
+                  nameTextField(size),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  emailTextField(size),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  noHpTextField(size),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  passwordTextField(size),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  confirmPasswordTextField(size),
+                  //sign in button & sign in with text
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  signUpButton(size),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  signInWithText(),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  SignInOneSocialButton(
+                    iconPath: 'assets/google_logo.svg',
+                    text: 'Daftar Dengan Google',
+                    size: size,
+                  ),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  //sign up text here
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    footerText(),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        textStyle: const TextStyle(
+                          color: Color(0xFF21899C),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Masuk',
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 14.0)),
+                    ),
+                  ]),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  loginText(),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -86,6 +123,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Widget nameTextField(Size size) {
+    return Container(
+      alignment: Alignment.center,
+      height: size.height / 14,
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          width: 1.0,
+          color: Colors.black,
+        ),
+      ),
+      child: TextField(
+        keyboardType: TextInputType.name,
+        style: GoogleFonts.inter(
+          fontSize: 16.0,
+          color: const Color(0xFF15224F),
+        ),
+        maxLines: 1,
+        cursorColor: const Color(0xFF15224F),
+        decoration: InputDecoration(
+            labelText: 'Nama Lengkap',
+            labelStyle: GoogleFonts.inter(
+              fontSize: 12.0,
+              color: const Color(0xFF969AA8),
+            ),
+            border: InputBorder.none),
+      ),
+    );
+  }
+
   Widget emailTextField(Size size) {
     return Container(
       alignment: Alignment.center,
@@ -95,10 +163,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
           width: 1.0,
-          color: const Color(0xFF21899C),
+          color: Colors.black,
         ),
       ),
       child: TextField(
+        keyboardType: TextInputType.emailAddress,
         style: GoogleFonts.inter(
           fontSize: 16.0,
           color: const Color(0xFF15224F),
@@ -107,6 +176,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
         cursorColor: const Color(0xFF15224F),
         decoration: InputDecoration(
             labelText: 'Alamat Email',
+            labelStyle: GoogleFonts.inter(
+              fontSize: 12.0,
+              color: const Color(0xFF969AA8),
+            ),
+            border: InputBorder.none),
+      ),
+    );
+  }
+
+  Widget noHpTextField(Size size) {
+    return Container(
+      alignment: Alignment.center,
+      height: size.height / 14,
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          width: 1.0,
+          color: Colors.black,
+        ),
+      ),
+      child: TextField(
+        keyboardType: TextInputType.phone,
+        style: GoogleFonts.inter(
+          fontSize: 16.0,
+          color: const Color(0xFF15224F),
+        ),
+        maxLines: 1,
+        cursorColor: const Color(0xFF15224F),
+        decoration: InputDecoration(
+            labelText: 'Nomor HP',
             labelStyle: GoogleFonts.inter(
               fontSize: 12.0,
               color: const Color(0xFF969AA8),
@@ -125,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
           width: 1.0,
-          color: const Color(0xFF21899C),
+          color: Colors.black,
         ),
       ),
       child: TextField(
@@ -148,13 +248,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget signInButton(Size size) {
+  Widget confirmPasswordTextField(Size size) {
+    return Container(
+      alignment: Alignment.center,
+      height: size.height / 14,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          width: 1.0,
+          color: Colors.black,
+        ),
+      ),
+      child: TextField(
+        style: GoogleFonts.inter(
+          fontSize: 16.0,
+          color: const Color(0xFF15224F),
+        ),
+        maxLines: 1,
+        obscureText: true,
+        keyboardType: TextInputType.visiblePassword,
+        cursorColor: const Color(0xFF15224F),
+        decoration: InputDecoration(
+            labelText: 'Konfrimasi Kata Sandi',
+            labelStyle: GoogleFonts.inter(
+              fontSize: 12.0,
+              color: const Color(0xFF969AA8),
+            ),
+            border: InputBorder.none),
+      ),
+    );
+  }
+
+  Widget signUpButton(Size size) {
     return Container(
       alignment: Alignment.center,
       height: size.height / 14,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50.0),
-        color: const Color(0xFF21899C),
+        color: Colors.black,
         boxShadow: [
           BoxShadow(
             color: const Color(0xFF4C2E84).withOpacity(0.2),
@@ -164,7 +296,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ],
       ),
       child: Text(
-        'Masuk',
+        'Daftar',
         style: GoogleFonts.inter(
           fontSize: 16.0,
           color: Colors.white,

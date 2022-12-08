@@ -1,44 +1,44 @@
-// import 'dart:convert';
+import 'dart:convert';
 
-// import 'package:warkahpintar/screens/peminjaman/main_menu_screen.dart';
-// import 'package:flutter/material.dart';
+import 'package:warkahpintar/screens/peminjaman/main_menu_screen.dart';
+import 'package:flutter/material.dart';
 
-// import '../common/my_const.dart';
-// import '../common/my_helper.dart';
-// import '../models/auth/login_model.dart';
-// import '../service/api.dart';
+import '../common/my_const.dart';
+import '../common/my_helper.dart';
+import '../models/auth/login_model.dart';
+import '../service/api.dart';
 
-// class AuthProvider with ChangeNotifier {
-//   Data? profile;
+class AuthProvider with ChangeNotifier {
+  bool _loading = true;
 
-//   Future<void> login(var params) async {
-//     var data = await API.post(API.apiUrl + 'auth/login', params);
+  Future<void> login(var params) async {
+    var data = await API.post(API.apiUrl + 'auth/login', params);
 
-//     // print(data);
-//     var result = LoginModel.fromJson(data);
+    // print(data);
+    var result = LoginModel.fromJson(data);
 
-//     if (result.status == true) {
-//       await MyHelper.setPref(
-//           MyConst.loginData, jsonEncode(result.data!.toJson()));
-//       API.init();
+    if (result.status == true) {
+      await MyHelper.setPref(
+          MyConst.loginData, jsonEncode(result.data!.toJson()));
+      API.init();
 
-//       MyHelper.navPushReplacement(const MainMenuScreen());
+      MyHelper.navPushReplacement(const MainMenuScreen());
 
-//       MyHelper.toast(result.message!);
-//     } else {
-//       MyHelper.toast(result.message!);
-//     }
-//   }
+      MyHelper.toast(result.message!);
+    } else {
+      MyHelper.toast(result.message!);
+    }
+  }
 
-//   Future<void> showProfile() async {
-//     profile = null;
+  // Future<void> showProfile() async {
+  //   profile = null;
 
-//     var data = await MyHelper.getPref(MyConst.loginData);
+  //   var data = await MyHelper.getPref(MyConst.loginData);
 
-//     var result = Data.fromJson(jsonDecode(data!));
+  //   var result = Data.fromJson(jsonDecode(data!));
 
-//     profile = result;
+  //   profile = result;
 
-//     notifyListeners();
-//   }
-// }
+  //   notifyListeners();
+  // }
+}

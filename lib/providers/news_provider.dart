@@ -1,44 +1,34 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:singkawang/models/news_model.dart' as news_model;
+import 'package:bananalive/models/news_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:singkawang/services/api.dart';
 
 import '../common/my_helper.dart';
+import '../services/api.dart';
 
 class NewsProvider with ChangeNotifier {
-  Data? profile;
-
   RefreshController refreshController = RefreshController(initialRefresh: true);
-  String filterMelebihiDeadline = '0';
-  List<news_model.Datum> listData = [];
+  List<Datum> listData = [];
   int page = 1;
   bool loading = false;
 
-  news_model.NewsModel? detailData;
-  bool loadingDetail = false;
-
-  Future<void> showListData(bool clearListParent, String cari) async {
+  Future<void> showListData(bool clearListParent) async {
     page++;
 
     if (clearListParent) {
       page = 1;
       loading = true;
-      notifyListeners();
+      // notifyListeners();
     }
 
     var params = {
       'page': page,
-      'filter_melebihi_deadline': filterMelebihiDeadline,
-      'cari': cari
     };
 
-    var data = await API.get('${API.apiUrl}posts', params);
-    var result = news_model.NewsModel.fromJson(data);
+    var data = await API.get(API.apiUrl + 'posts', params);
+    var result = NewsListModel.fromJson(data);
 
-    List<news_model.Datum> tempListData = [];
+    List<Datum> tempListData = [];
 
     if (result.status!) {
       for (var element in result.data!.data!) {
@@ -64,19 +54,70 @@ class NewsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> showDetailData(int id) async {
-    loadingDetail = true;
+  // Future<void> showDetailData(int id) async {
+  //   loadingDetail = true;
 
-    var data = await API.get('${API.apiUrl}posts/$id', null);
-    var result = news_model.NewsModel.fromJson(data);
+  //   var data = await API.get(API.apiUrl + 'peminjaman/single-data/$id', null);
+  //   var result = peminjaman_detail_model.PeminjamanDetailModel.fromJson(data);
 
-    if (result.status!) {
-      detailData = result;
-    } else {
-      await MyHelper.dialogOk(DialogType.ERROR, result.message ?? '-', () {});
-    }
+  //   if (result.status!) {
+  //     detailData = result;
+  //   } else {
+  //     await MyHelper.dialogOk(DialogType.ERROR, result.message ?? '-', () {});
+  //   }
 
-    loadingDetail = false;
-    notifyListeners();
-  }
+  //   loadingDetail = false;
+  //   notifyListeners();
+  // }
+
+  // Future<void> peminjamanData(var params) async {
+  //   loadingPeminjaman = true;
+  //   notifyListeners();
+
+  //   var data = await API.postMiltipart(
+  //       API.apiUrl + 'peminjaman/update-or-create-data', params, () {});
+  //   var result = CommonModel.fromJson(data);
+
+  //   if (result.status!) {
+  //     filterMelebihiDeadline = '0';
+  //     showListData(true, '');
+  //     MyHelper.navPop(null);
+  //     await MyHelper.dialogOk(DialogType.SUCCES, result.message ?? '-', () {});
+  //   } else {
+  //     await MyHelper.dialogOk(DialogType.ERROR, result.message ?? '-', () {});
+  //   }
+
+  //   loadingPeminjaman = false;
+  //   notifyListeners();
+  // }
+
+  // Future<void> kembalikanData(var params) async {
+  //   loadingPengembalian = true;
+  //   notifyListeners();
+
+  //   var data = await API.postMiltipart(
+  //       API.apiUrl + 'pengembalian/update-or-create-data', params, () {});
+  //   var result = CommonModel.fromJson(data);
+
+  //   if (result.status!) {
+  //     filterMelebihiDeadline = '0';
+  //     showListData(true, '');
+  //     MyHelper.navPop(null);
+  //     MyHelper.navPop(null);
+  //     await MyHelper.dialogOk(DialogType.SUCCES, result.message ?? '-', () {});
+  //   } else {
+  //     await MyHelper.dialogOk(DialogType.ERROR, result.message ?? '-', () {});
+  //   }
+
+  //   loadingPengembalian = false;
+  //   notifyListeners();
+  // }
+
+  // Future<void> setPenomoranJudul(String penomoranJudul) async {
+  //   await MyHelper.setPref(MyConst.penomoranJudul, penomoranJudul);
+  // }
+
+  // Future<String?> getPenomoranJudul() {
+  //   return MyHelper.getPref(MyConst.penomoranJudul);
+  // }
 }

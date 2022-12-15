@@ -6,6 +6,7 @@ import 'package:singkawang/providers/auth_provider.dart';
 import 'package:singkawang/screens/splash.dart';
 import 'package:singkawang/services/api.dart';
 import 'package:singkawang/services/navigation_service.dart';
+import 'package:singkawang/providers/news_provider.dart';
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthProvider())
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => NewsProvider()),
       ],
       child: MaterialApp(
         navigatorKey: NavigationService.navigatorKey,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:singkawang/screens/auth/login.dart';
-import 'package:singkawang/screens/mainmenu/news.dart';
+import '../auth/login.dart';
+import '../news/news_list_screen.dart';
 import 'home.dart';
 import 'agenda.dart';
 
@@ -18,7 +18,7 @@ class _MainMenuState extends State<MainMenu> {
     const HomeScreen(),
     null,
     const AgendaScreen(),
-    const NewsScreen(),
+    const NewsListScreen(),
     const LoginScreen(),
   ];
 

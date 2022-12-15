@@ -1,9 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:bananalive/models/news_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../common/my_helper.dart';
+import '../models/news/news_list_model.dart';
 import '../services/api.dart';
 
 class NewsProvider with ChangeNotifier {
@@ -25,7 +27,7 @@ class NewsProvider with ChangeNotifier {
       'page': page,
     };
 
-    var data = await API.get(API.apiUrl + 'posts', params);
+    var data = await API.get('${API.apiUrl}posts', params);
     var result = NewsListModel.fromJson(data);
 
     List<Datum> tempListData = [];

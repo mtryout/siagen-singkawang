@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
 import 'package:html2md/html2md.dart' as html2md;
-import 'package:singkawang/models/news_model.dart';
-import 'package:singkawang/services/api.dart';
+import 'package:singkawang/common/my_helper.dart';
 
+import '../../models/news/news_list_model.dart';
 
 class NewsDetailScreen extends StatefulWidget {
-  final NewsModel news;
+  final Datum news;
   NewsDetailScreen(this.news, {Key? key}) : super(key: key);
   @override
   _NewsDetailScreenState createState() => _NewsDetailScreenState();
@@ -19,33 +19,19 @@ class NewsDetailScreen extends StatefulWidget {
 
 class _NewsDetailScreenState extends State<NewsDetailScreen>
     with TickerProviderStateMixin {
-  late NewsModel news;
   late AnimationController controller;
   late AnimationController bodyScrollAnimationController;
-  late ScrollController scrollController;
   late Animation<double> scale;
   late Animation<double> appBarSlide;
   double headerImageSize = 0;
   bool isFavorite = false;
+
   @override
   void initState() {
-    news= widget.news;
     controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
     bodyScrollAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    scrollController = ScrollController()
-      ..addListener(() {
-        if (scrollController.offset >= headerImageSize / 2) {
-          if (!bodyScrollAnimationController.isCompleted) {
-            bodyScrollAnimationController.forward();
-          }
-        } else {
-          if (bodyScrollAnimationController.isCompleted) {
-            bodyScrollAnimationController.reverse();
-          }
-        }
-      });
 
     appBarSlide = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       curve: Curves.fastOutSlowIn,
@@ -68,8 +54,9 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    headerImageSize = MediaQuery.of(context).size.height / 2.5;
-    return ScaleTransition(
+    headerImageSize = MediaQuery.of(context).size.height / 2.3;
+    return 
+    ScaleTransition(
       scale: scale,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
@@ -77,7 +64,6 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
           body: Stack(
             children: <Widget>[
               SingleChildScrollView(
-                controller: scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -87,11 +73,11 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          buildEventTitle(),
+                          buildTitle(),
                           const SizedBox(height: 16.0),
-                          buildEventDate(),
+                          buildDate(),
                           const SizedBox(height: 24.0),
-                          buildDescEvent(),
+                          buildEvent(),
                           const SizedBox(height: 24.0),
                         ],
                       ),
@@ -144,7 +130,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(28.0)),
                 child: Image.network(
-                  '${API.imgUrl}${news.gambar!}',
+                  widget.news.gambar ?? '',
                   fit: BoxFit.fill,
                 ),
               ),
@@ -185,9 +171,9 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
     );
   }
 
-  Widget buildEventTitle() {
+  Widget buildTitle() {
     return Text(
-      news.title!,
+      widget.news.title ?? '-',
       textAlign: TextAlign.center,
       style: GoogleFonts.roboto(
           textStyle:
@@ -195,7 +181,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
     );
   }
 
-  Widget buildEventDate() {
+  Widget buildDate() {
     return Row(
       children: <Widget>[
         Container(
@@ -222,7 +208,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
                     textStyle: const TextStyle(
                         fontSize: 16.0, fontWeight: FontWeight.bold))),
             const SizedBox(width: 4.0),
-            Text(news.createdat!,
+            Text(MyHelper.formatIndoDate(widget.news.createdAt.toString()),
                 style: GoogleFonts.roboto(
                     textStyle:
                         const TextStyle(fontSize: 15.0, color: Colors.grey))),
@@ -232,8 +218,8 @@ class _NewsDetailScreenState extends State<NewsDetailScreen>
     );
   }
 
-  Widget buildDescEvent() {
-    String html = news.content!;
+  Widget buildEvent() {
+    String html = widget.news.content ?? '-';
     final markdown = html2md.convert(html);
 
     return ReadMoreText(

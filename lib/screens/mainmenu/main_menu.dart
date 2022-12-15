@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:singkawang/login.dart';
-import 'screens/home.dart';
-import 'screens/agenda.dart';
+import 'package:singkawang/screens/auth/login.dart';
+import 'package:singkawang/screens/mainmenu/news.dart';
+import 'home.dart';
+import 'agenda.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -17,7 +18,7 @@ class _MainMenuState extends State<MainMenu> {
     const HomeScreen(),
     null,
     const AgendaScreen(),
-    null,
+    const NewsScreen(),
     const LoginScreen(),
   ];
 

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:singkawang/login.dart';
+import 'package:singkawang/screens/auth/login.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -13,6 +13,20 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  // Future<void> regi() async {
+  //   var params = {
+  //     'email': _emailController.text,
+  //     'password': _passwordController.text,
+  //   };
+
+  //   if (_emailController.text == '' || _passwordController.text == '') {
+  //     MyHelper.toast('Inputan tidak boleh kosong');
+  //   } else {
+  //     await Provider.of<AuthProvider>(context, listen: false).login(params);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

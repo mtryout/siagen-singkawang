@@ -3,8 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:singkawang/main_menu.dart';
-import 'package:singkawang/register.dart';
+import 'package:provider/provider.dart';
+import 'package:singkawang/common/my_helper.dart';
+import 'package:singkawang/providers/auth_provider.dart';
+import 'package:singkawang/widgets/custom_loading.dart';
+import 'register.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -16,11 +19,58 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  
+  Future<void> login() async {
+    var params = {
+      'email': _emailController.text,
+      'password': _passwordController.text,
+    };
+
+    if (_emailController.text == '' || _passwordController.text == '') {
+      MyHelper.toast('Alamat Email atau Kata Sandi Kosong');
+    } else {
+      await Provider.of<AuthProvider>(context, listen: false).login(params);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var authProvider = Provider.of<AuthProvider>(context);
     final size = MediaQuery.of(context).size;
+
+    
+  Widget signInButton(Size size) {
+    return GestureDetector(
+      onTap: () {
+        login();
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: size.height / 14,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50.0),
+          color: Colors.black,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF4C2E84).withOpacity(0.2),
+              offset: const Offset(0, 15.0),
+              blurRadius: 60.0,
+            ),
+          ],
+        ),
+        child: (authProvider.loading) ? const CustomLoading() : Text(
+          'Masuk',
+          style: GoogleFonts.inter(
+            fontSize: 16.0,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            height: 1.5,
+          ),
+          textAlign: TextAlign.center,
+        )
+      ),
+    );
+  }
     
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -136,6 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       child: TextField(
+        controller: _emailController,
         style: GoogleFonts.inter(
           fontSize: 16.0,
           color: const Color(0xFF15224F),
@@ -166,6 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       child: TextField(
+        controller: _passwordController,
         style: GoogleFonts.inter(
           fontSize: 16.0,
           color: const Color(0xFF15224F),
@@ -181,44 +233,6 @@ class _LoginScreenState extends State<LoginScreen> {
               color: const Color(0xFF969AA8),
             ),
             border: InputBorder.none),
-      ),
-    );
-  }
-
-  Widget signInButton(Size size) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainMenu(),
-          ),
-        );
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: size.height / 14,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50.0),
-          color: Colors.black,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF4C2E84).withOpacity(0.2),
-              offset: const Offset(0, 15.0),
-              blurRadius: 60.0,
-            ),
-          ],
-        ),
-        child: Text(
-          'Masuk',
-          style: GoogleFonts.inter(
-            fontSize: 16.0,
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            height: 1.5,
-          ),
-          textAlign: TextAlign.center,
-        ),
       ),
     );
   }
@@ -344,18 +358,5 @@ class SignInOneSocialButton extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<void> login() async {
-    var params = {
-      'email': _emailController.text,
-      'password': _passwordController.text,
-    };
-
-    if (_emailController.text == '' || _passwordController.text == '') {
-      MyHelper.toast('Inputan tidak boleh kosong');
-    } else {
-      await Provider.of<AuthProvider>(context, listen: false).login(params);
-    }
   }
 }

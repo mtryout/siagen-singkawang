@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:singkawang/login.dart';
+import 'package:singkawang/common/my_const.dart';
+import 'package:singkawang/common/my_helper.dart';
+import 'package:singkawang/screens/auth/login.dart';
+import 'package:singkawang/screens/mainmenu/main_menu.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,12 +19,14 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(
       const Duration(seconds: 2),
-      () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
-        ),
-      ),
+      () async {
+        var bearer = await MyHelper.getPref(MyConst.bearer);
+        if (bearer != null) {
+          MyHelper.navPushReplacement(const MainMenu());
+        } else {
+          MyHelper.navPushReplacement(const LoginScreen());
+        }
+      },
     );
   }
 

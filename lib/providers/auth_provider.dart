@@ -1,33 +1,37 @@
-import 'dart:convert';
 
-import 'package:warkahpintar/screens/peminjaman/main_menu_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:singkawang/common/my_const.dart';
+import 'package:singkawang/screens/mainmenu/main_menu.dart';
 
-import '../common/my_const.dart';
 import '../common/my_helper.dart';
 import '../models/auth/login_model.dart';
-import '../service/api.dart';
+import '../services/api.dart';
 
 class AuthProvider with ChangeNotifier {
-  bool _loading = true;
+  bool loading = false;
 
   Future<void> login(var params) async {
-    var data = await API.post(API.apiUrl + 'auth/login', params);
+    loading = true;
+    notifyListeners();
+    
+    var data = await API.post('${API.apiUrl}login', params);
 
     // print(data);
     var result = LoginModel.fromJson(data);
 
-    if (result.status == true) {
+    if (result.status!) {
       await MyHelper.setPref(
-          MyConst.loginData, jsonEncode(result.data!.toJson()));
+          MyConst.bearer, result.accessToken);
       API.init();
 
-      MyHelper.navPushReplacement(const MainMenuScreen());
+      MyHelper.navPushReplacement(const MainMenu());
 
       MyHelper.toast(result.message!);
     } else {
       MyHelper.toast(result.message!);
     }
+     loading = false;
+    notifyListeners();
   }
 
   // Future<void> showProfile() async {

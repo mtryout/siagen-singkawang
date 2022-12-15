@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:singkawang/common/my_const.dart';
 
 import '../common/my_helper.dart';
 
 var dio = Dio();
 
 class API {
-  static String webUrl = "http://warkahpintar.teknoborneo.com/";
-  static String apiUrl = "http://warkahpintar.teknoborneo.com/api/";
+  static String webUrl = "http://agen-126.singkawangkota.go.id/";
+  static String apiUrl = "http://agen-126.singkawangkota.go.id/api/";
+  static String imgUrl = "http://agen-126.singkawangkota.go.id/storage/berita/";
 
   static Future<void> init() async {
     dio = Dio(BaseOptions(
@@ -24,10 +26,10 @@ class API {
   }
 
   static Future<void> setTokenHeader() async {
-    // var token = await MyHelper.getPref(MyConst.bearerToken);
-    // if (token != null) {
-    //   dio.options.headers.putIfAbsent("Authorization", () => token);
-    // }
+    var token = await MyHelper.getPref(MyConst.bearer);
+    if (token != null) {
+      dio.options.headers.putIfAbsent("Authorization", () => 'Bearer $token');
+    }
   }
 
   static Future<dynamic> get(String url, var params) async {

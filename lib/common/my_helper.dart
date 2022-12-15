@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors
+// ignore_for_file: avoid_print, prefer_const_constructors, deprecated_member_use
 
 import 'dart:math';
 
@@ -25,7 +25,7 @@ class MyHelper {
   static String convertIndoToSqlDate(String date) {
     List<String> dateList = date.split('-');
 
-    return dateList[2] + '-' + dateList[1] + '-' + dateList[0];
+    return '${dateList[2]}-${dateList[1]}-${dateList[0]}';
   }
 
   static bool isMapNull(var params) {
@@ -140,7 +140,7 @@ class MyHelper {
 
     final f = oCcy.format(price);
 
-    return "Rp " + f.toString().replaceAll(",", ".");
+    return "Rp ${f.toString().replaceAll(",", ".")}";
   }
 
   static void refreshState(GlobalKey? globalKey) {
